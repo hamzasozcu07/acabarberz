@@ -1461,6 +1461,23 @@ booking summary
     margin: 0 auto;
 }
 
+@media (max-width: 768px) {
+    .dashboard-layout {
+        /* Eller vad din container heter för Min Sida */
+        flex-direction: column;
+        /* Staplar dem på varandra */
+    }
+
+    .dashboard-sidebar,
+    .dashboard-right-column {
+        width: 100%;
+        order: 2;
+        /* Flyttar ner den under huvudboxen */
+        margin-top: 20px;
+    }
+}
+
+
 /* BOKNINGS SEKTION */
 .dashboard-main {
     display: flex;
@@ -3372,4 +3389,35 @@ textarea:focus,
 [tabindex]:focus {
     outline: 3px solid #FFD700 !important;
     outline-offset: 3px !important;
+}
+
+@media (max-width: 480px) {
+    .logo {
+        font-size: 1.5rem;
+        /* Sänker storleken lite så allt får plats på en rad */
+        letter-spacing: 1px;
+        white-space: nowrap;
+        /* Tvingar texten att hålla sig på en rad */
+    }
+}
+
+@media (max-width: 768px) {
+
+    /* Kalendern ska ta upp hela bredden */
+    .calendar-container {
+        width: 100%;
+        padding: 10px;
+    }
+
+    /* Gör dagarna i kalendern mindre så 7 dagar får plats i bredd */
+    .calendar-day {
+        height: 40px;
+        font-size: 0.9rem;
+    }
+
+    /* Tids-slottarna ska visas i 2 kolumner istället för 4 på mobil */
+    .time-slots-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 10px;
+    }
 }

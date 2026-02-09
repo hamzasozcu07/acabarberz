@@ -2690,3 +2690,24 @@ button,
         min-width: auto;
     }
 }
+
+@media (max-width: 768px) {
+
+    /* Gör hela kalendersektionen skrollbar i sidled så ingen dag försvinner */
+    .admin-calendar-wrapper {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 15px;
+    }
+
+    .admin-calendar-table {
+        min-width: 600px;
+        /* Tvingar tabellen att behålla sin form så man kan skrolla */
+    }
+
+    /* Alternativt: Minska texten på dagarna */
+    .calendar-header th {
+        font-size: 0.7rem;
+        padding: 5px 2px;
+    }
+}
