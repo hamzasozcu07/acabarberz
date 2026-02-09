@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="sv">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Hitta till ACABARBERZ. Adress, kollektivtrafik, parkering och öppettider.">
+    <title>Hitta oss - ACABARBERZ</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="stylesheet.css">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="main-header">
+            <div class="header-content">
+                <div class="logo">ACABARBERZ</div>
+                <nav class="main-nav">
+                    <a href="index.html" class="nav-link">Hem</a>
+                    <a href="boka.html" class="nav-link">Boka</a>
+                    <a href="hitta.html" class="nav-link active">Hitta oss</a>
+                    <a href="kontakta.html" class="nav-link">Kontakt</a>
+
+                    <!-- För gäster (ej inloggade) -->
+                    <span id="authLinks" style="display: none;">
+                        <a href="signup.html" class="nav-link">Registrera</a>
+                        <a href="signin.html" class="nav-link">Logga in</a>
+                    </span>
+
+                    <!-- För inloggade användare -->
+                    <span id="userLinks" style="display: none;">
+                        <a href="dashboard.html" class="nav-link">Min Sida</a>
+                        <a href="#" onclick="handleLogout(); return false;" class="nav-link"
+                            style="background: rgba(231, 76, 60, 0.1); color: #e74c3c; border-radius: 30px; padding: 12px 24px; position: relative;">Logga
+                            ut</a>
+                    </span>
+                </nav>
+            </div>
+            <button class="hamburger-menu" aria-label="Toggle menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </header>
+
+
+        <!-- Find Us Page Content -->
+        <div class="info-content">
+            <h1 class="section-title" style="font-size: 2.5em; margin-bottom: 50px;">Hitta till oss</h1>
+
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3 class="info-title">Adress</h3>
+                    <p style="font-size: 1.2em; margin-bottom: 15px;">
+                        <strong>ACABARBERZ</strong><br>
+                        Vasagatan 15<br>
+                        411 37 Göteborg<br>
+                        Sverige
+                    </p>
+                    <p style="color: #666;">
+                        Vi ligger centralt i Göteborg, nära Centralstationen och bara några minuter från Nordstan.
+                        Lätt att ta sig hit med både bil och kollektivtrafik.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3 class="info-title">Kollektivtrafik</h3>
+                    <p style="margin-bottom: 15px;"><strong>Buss:</strong> Linje 16, 18, 19 - Hållplats Vasagatan</p>
+                    <p style="margin-bottom: 15px;"><strong>Spårvagn:</strong> Linje 1, 4, 5 - Brunnsparken</p>
+                    <p style="margin-bottom: 15px;"><strong>Tåg:</strong> Göteborg Central (5 min promenad)</p>
+                    <p style="color: #666;">
+                        Använd Västtrafiks app för aktuella avgångar och reseplanerare.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3 class="info-title">Parkering</h3>
+                    <p style="margin-bottom: 15px;"><strong>Parkering:</strong> Parkering Nordstan (2 min promenad)</p>
+                    <p style="margin-bottom: 15px;"><strong>Gata:</strong> Begränsad gatuparkering, 2h max</p>
+                    <p style="margin-bottom: 15px;"><strong>Alternativ:</strong> Citypassage Parkering</p>
+                    <p style="color: #666;">
+                        Vi rekommenderar kollektivtrafik då parkeringsplatserna i centrum är begränsade.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3 class="info-title">Öppettider</h3>
+                    <p style="margin-bottom: 10px;"><strong>Måndag - Fredag:</strong> 09:00 - 18:00</p>
+                    <p style="margin-bottom: 10px;"><strong>Lördag:</strong> 09:00 - 16:00</p>
+                    <p style="margin-bottom: 15px;"><strong>Söndag:</strong> Stängt</p>
+                    <p style="color: #666; font-size: 0.9em;">
+                        <em>Observera att öppettiderna kan variera under helger.
+                            Kontakta oss för information om speciella öppettider.</em>
+                    </p>
+                </div>
+            </div>
+
+            <div class="map-section">
+                <h3 class="info-title" style="text-align: center; margin-bottom: 25px;">📍 Hitta oss på kartan</h3>
+                <div class="map-container">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2132.087630537791!2d11.966453399999999!3d57.697981000000006!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x464ff36e7da78b77%3A0x8e12f0e963c106a!2sVasagatan%2015%2C%20411%2024%20G%C3%B6teborg!5e0!3m2!1ssv!2sse!4v1770310997181!5m2!1ssv!2sse"
+                        allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+                <div class="map-info">
+                    <p><strong>📍 ACABARBERZ</strong> | Vasagatan 15, 411 37 Göteborg</p>
+                    <a href="https://www.google.com/maps/dir/?api=1&destination=Vasagatan+15,411+37+Göteborg"
+                        target="_blank" class="directions-btn">
+                         Få vägbeskrivning
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h3>ACABARBERZ</h3>
+                    <p>Din professionella frisörsalong i hjärtat av Göteborg. Vi erbjuder moderna frisyrer och
+                        behandlingar i en avslappnad och välkomnande miljö.</p>
+                    <div class="footer-social">
+                        <a href="#" title="Facebook">📘</a>
+                        <a href="#" title="Instagram">📷</a>
+                        <a href="#" title="TikTok">🎵</a>
+                        <a href="#" title="LinkedIn">💼</a>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Snabblänkar</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Hem</a></li>
+                        <li><a href="boka.html">Boka tid</a></li>
+                        <li><a href="hitta.html">Hitta oss</a></li>
+                        <li><a href="kontakta.html">Kontakt</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Våra tjänster</h3>
+                    <ul class="footer-links">
+                        <li><a href="boka.html">Konsultation</a></li>
+                        <li><a href="boka.html">Snabb service</a></li>
+                        <li><a href="boka.html">Styling & Design</a></li>
+                        <li><a href="boka.html">Premium Experience</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <div class="footer-contact-info">
+                        <h4>Kontaktinformation</h4>
+                        <div class="footer-contact-item">
+                            <span class="icon">📍</span>
+                            <span>Vasagatan 15, 411 37 Göteborg</span>
+                        </div>
+                        <div class="footer-contact-item">
+                            <span class="icon">📞</span>
+                            <a href="tel:+46317123456">031-712 34 56</a>
+                        </div>
+                        <div class="footer-contact-item">
+                            <span class="icon">📧</span>
+                            <a href="mailto:info@acabarberz.se">info@acabarberz.se</a>
+                        </div>
+                        <div class="footer-contact-item">
+                            <span class="icon">⏰</span>
+                            <span>Mån-Fre: 09:00-18:00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2024 ACABARBERZ. Alla rättigheter förbehållna.</p>
+                <div class="footer-links-bottom">
+                    <a href="integritetspolicy.html">Integritetspolicy</a>
+                    <a href="anvandarvillkor.html">Användarvillkor</a>
+                    <a href="cookies.html">Cookies</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav-overlay"></div>
+    <nav class="mobile-nav">
+        <div class="mobile-nav-header">
+            <h2 class="mobile-logo">ACABARBERZ</h2>
+        </div>
+        <div class="mobile-nav-links">
+            <a href="index.html" class="mobile-nav-link">🏠 Hem</a>
+            <a href="boka.html" class="mobile-nav-link">📅 Boka tid</a>
+            <a href="hitta.html" class="mobile-nav-link">📍 Hitta oss</a>
+            <a href="kontakta.html" class="mobile-nav-link">💬 Kontakt</a>
+            <div class="mobile-nav-section" id="mobileNavAuthSection">
+                <div class="mobile-nav-section-title">Ditt konto</div>
+
+                <!-- För gäster (ej inloggade) -->
+                <span id="mobileAuthLinks" style="display: none;">
+                    <a href="signin.html" class="mobile-nav-link">🔐 Logga in</a>
+                    <a href="signup.html" class="mobile-nav-link">✨ Registrera</a>
+                </span>
+
+                <!-- För inloggade användare -->
+                <span id="mobileUserLinks" style="display: none;">
+                    <a href="dashboard.html" class="mobile-nav-link">👤 Min Sida</a>
+                    <a href="#" onclick="handleLogout(); return false;" class="mobile-nav-link"
+                        style="color: #ff6b6b;">🚪 Logga ut</a>
+                </span>
+            </div>
+            <div class="mobile-nav-section">
+                <div class="mobile-nav-section-title">Information</div>
+                <a href="integritetspolicy.html" class="mobile-nav-link">🔒 Integritetspolicy</a>
+                <a href="anvandarvillkor.html" class="mobile-nav-link">📋 Användarvillkor</a>
+                <a href="cookies.html" class="mobile-nav-link">🍪 Cookies</a>
+            </div>
+        </div>
+        <div class="mobile-nav-footer">
+            <div class="mobile-contact-info">
+                <div class="mobile-contact-item">
+                    <span class="icon">📞</span>
+                    <a href="tel:+46317123456">031-712 34 56</a>
+                </div>
+                <div class="mobile-contact-item">
+                    <span class="icon">📧</span>
+                    <a href="mailto:info@acabarberz.se">info@acabarberz.se</a>
+                </div>
+                <div class="mobile-contact-item">
+                    <span class="icon">⏰</span>
+                    <span>Mån-Fre: 09:00-18:00</span>
+                </div>
+            </div>
+            <div class="mobile-social-links">
+                <a href="#" class="mobile-social-link">📘</a>
+                <a href="#" class="mobile-social-link">📷</a>
+                <a href="#" class="mobile-social-link">🎵</a>
+                <a href="#" class="mobile-social-link">💼</a>
+            </div>
+        </div>
+    </nav>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="auth.js"></script>
+    <script src="navigation.js"></script>
+    <script src="hamburgermeny.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="sv">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Logga in på ditt ACABARBERZ-konto.">
+    <title>Logga in - ACABARBERZ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="stylesheet.css">
+</head>
+
+<body>
+    <div class="auth-container">
+        <div class="auth-box">
+            <div class="auth-header">
+                <h1>ACABARBERZ</h1>
+                <h2>Logga in</h2>
+                <p>Logga in på ditt konto för att hantera dina bokningar</p>
+            </div>
+
+            <form id="signinForm">
+                <div class="form-group">
+                    <label for="signin-email">E-postadress *</label>
+                    <input type="email" id="signin-email" name="email" required 
+                           placeholder="din@email.se">
+                </div>
+
+                <div class="form-group">
+                    <label for="signin-password">Lösenord *</label>
+                    <input type="password" id="signin-password" name="password" required 
+                           placeholder="Ditt lösenord">
+                </div>
+
+                <div class="form-group checkbox">
+                    <input type="checkbox" id="signin-remember" name="remember">
+                    <label for="signin-remember">Kom ihåg mig</label>
+                </div>
+
+                <button type="submit" class="auth-btn">Logga in</button>
+
+                <div class="auth-divider">eller</div>
+
+                <a href="signup.html" class="auth-link-btn">Skapa nytt konto</a>
+
+                <div style="text-align: center; margin-top: 20px;">
+                    <a href="#" onclick="showForgotPassword(); return false;" style="color: rgb(196, 142, 16); text-decoration: none; font-size: 0.9em;">
+                        Glömt lösenord?
+                    </a>
+                </div>
+            </form>
+
+            <div id="signinMessage" class="auth-message" style="display: none;"></div>
+        </div>
+
+        <div class="auth-footer">
+            <p>&copy; 2024 ACABARBERZ. Alla rättigheter förbehållna.</p>
+        </div>
+    </div>
+
+    <!-- Glömt lösenord Modal -->
+    <div id="resetPasswordModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Återställ lösenord</h3>
+                <button type="button" class="modal-close" onclick="closeForgotPassword()">&times;</button>
+            </div>
+            <form id="resetPasswordForm">
+                <div class="form-group">
+                    <label for="reset-email">Ange din e-postadress</label>
+                    <input type="email" id="reset-email" required placeholder="din@email.se">
+                </div>
+                <button type="submit" class="auth-btn">Skicka återställningslänk</button>
+            </form>
+            <div id="resetMessage" class="auth-message" style="display: none;"></div>
+        </div>
+    </div>
+
+    <!-- Firebase v8 - Stabilt och testat -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
+    <!-- Auth Script -->
+    <script src="auth.js"></script>
+
+    <script src="validation.js"></script>
+</body>
+
+</html>

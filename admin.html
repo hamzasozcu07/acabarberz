@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="sv">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frisör Admin Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styleadmin.css">
+</head>
+
+<body>
+    <div class="dashboard-container">
+        <div class="dashboard-header">
+            <h1> ACABARBERZ ADMIN</h1>
+            <h2> välkommen hem admin </h2>
+        </div>
+
+        <div class="dashboard-nav">
+
+            <!-- Hamburger Menu för mobil -->
+            <div class="hamburger-menu" id="hamburgerMenu" onclick="toggleMobileNav()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+            <!-- Mobile Navigation Overlay -->
+            <div class="mobile-nav-overlay" id="mobileNavOverlay" onclick="closeMobileNav()"></div>
+
+            <!-- Mobile Navigation Panel -->
+            <div class="mobile-nav" id="mobileNav">
+                <div class="mobile-nav-header">
+                    <h3>Meny</h3>
+                    <button class="mobile-nav-close" onclick="closeMobileNav()">&times;</button>
+                </div>
+                <div class="mobile-nav-links">
+                    <button class="mobile-nav-btn" onclick="showSection('overview'); closeMobileNav();">
+                        <span>📊</span> Översikt
+                    </button>
+                    <button class="mobile-nav-btn" onclick="showSection('bookings'); closeMobileNav();">
+                        <span>📋</span> Bokningar
+                    </button>
+                    <button class="mobile-nav-btn" onclick="showSection('calendar'); closeMobileNav();">
+                        <span>📅</span> Kalender
+                    </button>
+                    <button class="mobile-nav-btn" onclick="showSection('customers'); closeMobileNav();">
+                        <span>👥</span> Klienter
+                    </button>
+                    <button class="mobile-nav-btn" onclick="showSection('messages'); closeMobileNav();">
+                        <span>✉️</span> Meddelanden
+                    </button>
+                    <button class="nav-btn" onclick="refreshData()" id="refreshBtn">🔄 Uppdatera</button>
+                </div>
+                <div class="mobile-nav-footer">
+                    <button class="mobile-logout-btn" onclick="handleLogout()">
+                        🚪 Logga ut
+                    </button>
+                    <div class="mobile-refresh-info">
+                        Senast uppdaterad: <span id="mobileLastUpdated">nu</span>
+                    </div>
+                </div>
+            </div>
+            <div class="nav-buttons">
+                <button class="nav-btn active" onclick="showSection('overview')">📊 Översikt</button>
+                <button class="nav-btn" onclick="showSection('bookings')">📋 Bokningar</button>
+                <button class="nav-btn" onclick="showSection('calendar')">📅 Kalender</button>
+                <button class="nav-btn" onclick="showSection('customers')">👥 Klienter</button>
+                <button class="nav-btn" onclick="showSection('messages')">✉️ Meddelanden</button>
+            </div>
+            <div>
+                <span style="color: white;">Senast uppdaterad: <span id="lastUpdated">--:--</span></span>
+                <button class="nav-btn" onclick="refreshData()" id="refreshBtn">🔄 Uppdatera</button>
+            </div>
+        </div>
+
+        <!-- ÖVERSIKT SEKTION -->
+        <div class="dashboard-section active" id="overview">
+            <div class="stats-section">
+                <div class="stat-card bookings">
+                    <div class="stat-number" id="totalBookings">0</div>
+                    <div class="stat-label">Totala Bokningar</div>
+                </div>
+                <div class="stat-card today">
+                    <div class="stat-number" id="todayBookings">0</div>
+                    <div class="stat-label">Idag</div>
+                </div>
+                <div class="stat-card week">
+                    <div class="stat-number" id="weekBookings">0</div>
+                    <div class="stat-label">Denna Vecka</div>
+                </div>
+                <div class="stat-card revenue">
+                    <div class="stat-number" id="estimatedRevenue">0</div>
+                    <div class="stat-label">Beräknad Intäkt (kr)</div>
+                </div>
+            </div>
+
+            <div class="content-container">
+                <h2 class="section-title">📊 Snabböversikt</h2>
+
+                <div class="quick-actions" style="background: #f8f9fa; padding: 20px; border-radius: 10px;">
+                    <h3 style="margin-bottom: 15px; color: #2c3e50;">Snabbåtgärder</h3>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <button class="quick-btn" onclick="refreshData()">🔄 Ladda Bokningar</button>
+                        <button class="quick-btn" onclick="showTodayBookings()">📅 Idag's Bokningar</button>
+                    </div>
+                </div>
+
+                <div id="todayBookingsList" style="margin-top: 20px;"></div>
+            </div>
+        </div>
+
+        <!-- BOKNINGAR SEKTION -->
+        <div class="dashboard-section" id="bookings">
+            <div class="content-container">
+                <h2 class="section-title">📋 Alla Bokningar</h2>
+
+                <div class="booking-list" id="bookingList">
+                    <div style="text-align: center; padding: 40px;">
+                        <div class="loading-spinner"></div>
+                        <p>Laddar bokningar från gemensam databas...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- KALENDER SEKTION -->
+        <div class="dashboard-section" id="calendar">
+            <div class="content-container calendar-container">
+                <h2 class="section-title">📅 Bokningskalender</h2>
+                <div id="calendarControls" class="calendar-controls" style="margin-bottom:10px;"></div>
+                <div id="calendarGrid" class="calendar-grid"
+                    style="display:grid; grid-template-columns: repeat(7, 1fr); gap:6px;"></div>
+            </div>
+        </div>
+
+        <!-- KUNDER SEKTION -->
+        <div class="dashboard-section" id="customers">
+            <div class="content-container">
+                <h2 class="section-title">👥 Mina Klienter</h2>
+
+                <div class="customer-stats">
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalCustomers">0</div>
+                        <div class="stat-label">Totala Kunder</div>
+                    </div> 
+                    <div class="stat-card">
+                        <div class="stat-number" id="newCustomersMonth">0</div>
+                        <div class="stat-label">Nya Denna Månad</div>
+                    </div>
+                </div>
+
+                <div class="filter-section" style="margin-top: 30px;">
+                    <input type="text" class="filter-input" placeholder="🔍 Sök kund (namn, e-post, telefon)..."
+                        id="customerSearchInput" onkeyup="filterCustomers()">
+                    <select class="filter-input" id="customerSortBy" onchange="sortCustomers()">
+                        <option value="newest">Senast registrerad</option>
+                        <option value="oldest">Äldst registrerad</option>
+                        <option value="name">Namn (A-Ö)</option>
+                    </select>
+                    <button class="quick-btn" onclick="clearCustomerFilters()">🗑️ Rensa</button>
+                </div>
+
+                <div class="customers-list" id="customersList">
+                    <div style="text-align: center; padding: 40px;">
+                        <div class="loading-spinner"></div>
+                        <p>Laddar kunder från Firebase...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal för kunddetaljer -->
+        <div id="customerDetailsModal" class="modal" style="display: none;">
+            <div class="modal-content" style="max-width: 800px;">
+                <div class="modal-header">
+                    <h3>👤 Kunddetaljer</h3>
+                    <button type="button" class="modal-close" onclick="closeCustomerDetails()">&times;</button>
+                </div>
+                <div id="customerDetailsContent"></div>
+            </div>
+        </div>
+
+        <!-- MEDDELANDEN SEKTION - INBOX LAYOUT -->
+        <div class="dashboard-section" id="messages"> 
+            <div class="content-container">
+                <h2 class="section-title">✉️ Meddelanden</h2>
+
+                <div class="messaging-layout">
+                    <!-- Sidopanel -->
+                    <div class="conversations-sidebar">
+                        <div class="conversations-header">
+                            <h3>Konversationer</h3>
+                            <span class="unread-badge" id="unreadCount">0</span>
+                        </div>
+                        <div class="conversations-filter">
+                            <input type="text" id="conversationFilter" placeholder="🔍 Sök efter namn..."
+                                oninput="filterConversations()">
+                        </div>
+                        <div class="conversations-list" id="conversationsList">
+                            <div class="empty-state">
+                                <span>💬</span>
+                                <p>Inga meddelanden ännu</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Chat -->
+                    <div class="chat-area" id="chatArea">
+                        <div class="chat-empty-state" id="chatEmptyState">
+                            <span>📨</span>
+                            <h3>Välj en konversation</h3>
+                            <p>Klicka på ett namn för att läsa och svara</p>
+                        </div>
+
+                        <div class="chat-active" id="chatActive" style="display: none;">
+                            <div class="chat-header">
+                                <div class="chat-header-info">
+                                    <h3 id="chatCustomerName">Kundnamn</h3>
+                                    <p id="chatCustomerEmail">email@example.com</p>
+                                </div>
+                            </div>
+
+                            <div class="chat-messages" id="chatMessages"></div>
+
+                            <div class="chat-input-area">
+                                <div class="chat-input-container">
+                                    <textarea id="messageInput" placeholder="Skriv ett meddelande..." rows="1"
+                                        onkeydown="handleMessageKeydown(event)"></textarea>
+                                    <button class="send-btn" onclick="sendAdminMessage()" id="sendBtn">
+                                        <span>Skicka</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notifikationer -->
+        <div class="notification" id="notification">
+            <span id="notificationText">Meddelande</span>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="auth.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script src="admin.js"></script>
+
+</body>
+
+</html>

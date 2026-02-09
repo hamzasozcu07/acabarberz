@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="sv">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Boka din tid hos ACABARBERZ enkelt online. Välj datum och tid som passar dig.">
+    <title>Boka tid - ACABARBERZ</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="stylesheet.css">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="main-header">
+            <div class="header-content">
+                <div class="logo">ACABARBERZ</div>
+                <nav class="main-nav">
+                    <a href="index.html" class="nav-link">Hem</a>
+                    <a href="boka.html" class="nav-link active">Boka</a>
+                    <a href="hitta.html" class="nav-link">Hitta oss</a>
+                    <a href="kontakta.html" class="nav-link">Kontakt</a>
+
+                    <!-- För gäster (ej inloggade) -->
+                    <span id="authLinks" style="display: none;">
+                        <a href="signup.html" class="nav-link">Registrera</a>
+                        <a href="signin.html" class="nav-link">Logga in</a>
+                    </span>
+
+                    <!-- För inloggade användare -->
+                    <span id="userLinks" style="display: none;">
+                        <a href="dashboard.html" class="nav-link">Min Sida</a>
+                        <a href="#" onclick="handleLogout(); return false;" class="nav-link"
+                            style="background: rgba(231, 76, 60, 0.1); color: #e74c3c; border-radius: 30px; padding: 12px 24px; position: relative;">Logga
+                            ut</a>
+                    </span>
+                </nav>
+            </div>
+            <button class="hamburger-menu" aria-label="Toggle menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </header>
+
+        <!-- Booking Page Content -->
+        <div class="booking-content">
+            <!-- Booking Form -->
+            <div class="booking-section">
+                <h2 class="section-title">Bokningsformulär</h2>
+
+                <form id="bookingForm" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="name">Namn *</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">E-post *</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="service">Tjänst *</label>
+                        <select id="service" name="service" required>
+                            <option value="">Välj tjänst</option>
+                            <option value="konsultation">Konsultation (800 kr)</option>
+                            <option value="snabb-service">Snabb service (400 kr)</option>
+                            <option value="styling-design">Styling & Design (1200 kr)</option>
+                            <option value="premium-experience">Premium Experience (1500 kr)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Meddelande</label>
+                        <textarea id="message" name="message" rows="3"
+                            placeholder="Beskriv kort vad du behöver hjälp med..."></textarea>
+                    </div>
+
+                    <!-- Booking Summary -->
+                    <div class="booking-summary" id="bookingSummary">
+                        <h3>Bokningssammanfattning</h3>
+                        <p><strong>Datum:</strong> <span id="selectedDate">-</span></p>
+                        <p><strong>Tid:</strong> <span id="selectedTime">-</span></p>
+                        <p><strong>Tjänst:</strong> <span id="selectedService">-</span></p>
+                    </div>
+
+                    <button type="button" class="btn" onclick="handleBookingSubmission()">Bekräfta bokning</button>
+                </form>
+
+                <!-- Success Message -->
+                <div class="success-message" id="successMessage">
+                    <h3>Bokning bekräftad!</h3>
+                    <p>Du kommer att få en bekräftelse via e-post inom kort.</p>
+                </div>
+            </div>
+
+            <!-- Calendar Section -->
+            <div class="calendar-section">
+                <h2 class="section-title">Välj datum och tid</h2>
+
+                <!-- Calendar Navigation -->
+                <div class="calendar-navigation">
+                    <button type="button" class="nav-btn" onclick="changeMonth(-1)">‹ Föregående</button>
+                    <h3 id="currentMonth">Oktober 2025</h3>
+                    <button type="button" class="nav-btn" onclick="changeMonth(1)">Nästa ›</button>
+                </div>
+
+                <!-- Calendar -->
+                <div class="calendar-grid" id="calendar">
+                    <!-- Week days -->
+                    <div class="calendar-header">Mån</div>
+                    <div class="calendar-header">Tis</div>
+                    <div class="calendar-header">Ons</div>
+                    <div class="calendar-header">Tor</div>
+                    <div class="calendar-header">Fre</div>
+                    <div class="calendar-header">Lör</div>
+                    <div class="calendar-header">Sön</div>
+                    <!-- Days generated by JavaScript -->
+                </div>
+
+                <!-- Time Slots -->
+                <div class="time-slots" id="timeSlots" style="display: none;">
+                    <div class="time-slot" onclick="selectTime('09:00')">09:00</div>
+                    <div class="time-slot" onclick="selectTime('10:00')">10:00</div>
+                    <div class="time-slot" onclick="selectTime('11:00')">11:00</div>
+                    <div class="time-slot" onclick="selectTime('13:00')">13:00</div>
+                    <div class="time-slot" onclick="selectTime('14:00')">14:00</div>
+                    <div class="time-slot" onclick="selectTime('15:00')">15:00</div>
+                    <div class="time-slot" onclick="selectTime('16:00')">16:00</div>
+                    <div class="time-slot" onclick="selectTime('17:00')">17:00</div>
+                </div>
+
+                <!-- Status Legend -->
+                <div style="margin-top: 20px;">
+                    <p><span class="status-indicator available-indicator"></span>Tillgänglig</p>
+                    <p><span class="status-indicator booked-indicator"></span>Bokad</p>
+                    <p><span class="status-indicator passed-indicator"></span>Förfluten tid</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h3>ACABARBERZ</h3>
+                    <p>Din professionella frisörsalong i hjärtat av Göteborg. Vi erbjuder moderna frisyrer och
+                        behandlingar i en avslappnad och välkomnande miljö.</p>
+                    <div class="footer-social">
+                        <a href="#" title="Facebook">📘</a>
+                        <a href="#" title="Instagram">📷</a>
+                        <a href="#" title="TikTok">🎵</a>
+                        <a href="#" title="LinkedIn">💼</a>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Snabblänkar</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Hem</a></li>
+                        <li><a href="boka.html">Boka tid</a></li>
+                        <li><a href="hitta.html">Hitta oss</a></li>
+                        <li><a href="kontakta.html">Kontakt</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Våra tjänster</h3>
+                    <ul class="footer-links">
+                        <li><a href="boka.html">Konsultation</a></li>
+                        <li><a href="boka.html">Snabb service</a></li>
+                        <li><a href="boka.html">Styling & Design</a></li>
+                        <li><a href="boka.html">Premium Experience</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <div class="footer-contact-info">
+                        <h4>Kontaktinformation</h4>
+                        <div class="footer-contact-item">
+                            <span class="icon">📍</span>
+                            <span>Vasagatan 15, 411 37 Göteborg</span>
+                        </div>
+                        <div class="footer-contact-item">
+                            <span class="icon">📞</span>
+                            <a href="tel:+46317123456">031-712 34 56</a>
+                        </div>
+                        <div class="footer-contact-item">
+                            <span class="icon">📧</span>
+                            <a href="mailto:info@acabarberz.se">info@acabarberz.se</a>
+                        </div>
+                        <div class="footer-contact-item">
+                            <span class="icon">⏰</span>
+                            <span>Mån-Fre: 09:00-18:00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2024 ACABARBERZ. Alla rättigheter förbehållna.</p>
+                <div class="footer-links-bottom">
+                    <a href="integritetspolicy.html">Integritetspolicy</a>
+                    <a href="anvandarvillkor.html">Användarvillkor</a>
+                    <a href="cookies.html">Cookies</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav-overlay"></div>
+    <nav class="mobile-nav">
+        <div class="mobile-nav-header">
+            <h2 class="mobile-logo">ACABARBERZ</h2>
+        </div>
+        <div class="mobile-nav-links">
+            <a href="index.html" class="mobile-nav-link">🏠 Hem</a>
+            <a href="boka.html" class="mobile-nav-link">📅 Boka tid</a>
+            <a href="hitta.html" class="mobile-nav-link">📍 Hitta oss</a>
+            <a href="kontakta.html" class="mobile-nav-link">💬 Kontakt</a>
+            <div class="mobile-nav-section" id="mobileNavAuthSection">
+                <div class="mobile-nav-section-title">Ditt konto</div>
+
+                <!-- För gäster (ej inloggade) -->
+                <span id="mobileAuthLinks" style="display: none;">
+                    <a href="signin.html" class="mobile-nav-link">🔐 Logga in</a>
+                    <a href="signup.html" class="mobile-nav-link">✨ Registrera</a>
+                </span>
+
+                <!-- För inloggade användare -->
+                <span id="mobileUserLinks" style="display: none;">
+                    <a href="dashboard.html" class="mobile-nav-link">👤 Min Sida</a>
+                    <a href="#" onclick="handleLogout(); return false;" class="mobile-nav-link"
+                        style="color: #ff6b6b;">🚪 Logga ut</a>
+                </span>
+            </div>
+            <div class="mobile-nav-section">
+                <div class="mobile-nav-section-title">Information</div>
+                <a href="integritetspolicy.html" class="mobile-nav-link">🔒 Integritetspolicy</a>
+                <a href="anvandarvillkor.html" class="mobile-nav-link">📋 Användarvillkor</a>
+                <a href="cookies.html" class="mobile-nav-link">🍪 Cookies</a>
+            </div>
+        </div>
+        <div class="mobile-nav-footer">
+            <div class="mobile-contact-info">
+                <div class="mobile-contact-item">
+                    <span class="icon">📞</span>
+                    <a href="tel:+46317123456">031-712 34 56</a>
+                </div>
+                <div class="mobile-contact-item">
+                    <span class="icon">📧</span>
+                    <a href="mailto:info@acabarberz.se">info@acabarberz.se</a>
+                </div>
+                <div class="mobile-contact-item">
+                    <span class="icon">⏰</span>
+                    <span>Mån-Fre: 09:00-18:00</span>
+                </div>
+            </div>
+            <div class="mobile-social-links">
+                <a href="#" class="mobile-social-link">📘</a>
+                <a href="#" class="mobile-social-link">📷</a>
+                <a href="#" class="mobile-social-link">🎵</a>
+                <a href="#" class="mobile-social-link">💼</a>
+            </div>
+        </div>
+    </nav>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="auth.js"></script>
+    <script src="navigation.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script src="bookingsystem.js"></script>
+    <script src="validation.js"></script>
+    <script src="hamburgermeny.js"></script>
+</body>
+
+</html>

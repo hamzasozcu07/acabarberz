@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="sv">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Registrera dig hos ACABARBERZ för att boka tid enkelt.">
+    <title>Registrera - ACABARBERZ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="stylesheet.css">
+</head>
+
+<body>
+    <div class="auth-container">
+        <div class="auth-box">
+            <div class="auth-header">
+                <h1>ACABARBERZ</h1>
+                <h2>Skapa konto</h2>
+                <p>Registrera dig för att boka tid och hantera dina bokningar</p>
+            </div>
+
+            <form id="signupForm">
+                <div class="form-group">
+                    <label for="signup-name">Fullständigt namn *</label>
+                    <input type="text" id="signup-name" name="name" required 
+                           placeholder="Förnamn Efternamn">
+                </div>
+
+                <div class="form-group">
+                    <label for="signup-email">E-postadress *</label>
+                    <input type="email" id="signup-email" name="email" required 
+                           placeholder="din@email.se">
+                </div>
+
+                <div class="form-group">
+                    <label for="signup-phone">Telefonnummer (valfritt)</label>
+                    <input type="tel" id="signup-phone" name="phone" 
+                           placeholder="070-123 45 67">
+                </div>
+
+                <div class="form-group">
+                    <label for="signup-password">Lösenord *</label>
+                    <input type="password" id="signup-password" name="password" required 
+                           placeholder="Minst 8 tecken">
+                    <small style="color: #666; display: block; margin-top: 5px;">
+                        Lösenordet måste innehålla minst 8 tecken
+                    </small>
+                </div>
+
+                <div class="form-group">
+                    <label for="signup-confirm-password">Bekräfta lösenord *</label>
+                    <input type="password" id="signup-confirm-password" name="confirm-password" required 
+                           placeholder="Upprepa lösenord">
+                </div>
+
+                <div class="form-group checkbox">
+                    <input type="checkbox" id="signup-terms" name="terms" required>
+                    <label for="signup-terms">
+                        Jag accepterar <a href="anvandarvillkor.html" target="_blank">användarvillkoren</a> 
+                        och <a href="integritetspolicy.html" target="_blank">integritetspolicyn</a>
+                    </label>
+                </div>
+
+                <button type="submit" class="auth-btn">Registrera konto</button>
+
+                <div class="auth-divider">eller</div>
+
+                <a href="signin.html" class="auth-link-btn">Jag har redan ett konto</a>
+            </form>
+
+            <div id="signupMessage" class="auth-message" style="display: none;"></div>
+        </div>
+
+        <div class="auth-footer">
+            <p>&copy; 2024 ACABARBERZ. Alla rättigheter förbehållna.</p>
+        </div>
+    </div>
+
+    <!-- Firebase v8 - Stabilt och testat -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
+    <!-- Auth Script -->
+    <script src="auth.js"></script>
+
+    <script src="validation.js"></script>
+</body>
+
+</html> 

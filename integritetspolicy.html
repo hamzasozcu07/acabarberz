@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="sv">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Integritetspolicy för ACABARBERZ. Läs om hur vi hanterar dina personuppgifter.">
+    <title>Integritetspolicy - ACABARBERZ</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="stylesheet.css">
+
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="main-header">
+            <div class="header-content">
+                <div class="logo">ACABARBERZ</div>
+                <nav class="main-nav">
+                    <a href="index.html" class="nav-link">Hem</a>
+                    <a href="boka.html" class="nav-link">Boka</a>
+                    <a href="hitta.html" class="nav-link">Hitta oss</a>
+                    <a href="kontakta.html" class="nav-link">Kontakt</a>
+                    <div class="mobile-nav-section" id="mobileNavAuthSection">
+                        <div class="mobile-nav-section-title">Ditt konto</div>
+
+                        <!-- För gäster (ej inloggade) -->
+                        <span id="mobileAuthLinks" style="display: none;">
+                            <a href="signin.html" class="mobile-nav-link">🔐 Logga in</a>
+                            <a href="signup.html" class="mobile-nav-link">✨ Registrera</a>
+                        </span>
+
+                        <!-- För inloggade användare -->
+                        <span id="mobileUserLinks" style="display: none;">
+                            <a href="dashboard.html" class="mobile-nav-link">👤 Min Sida</a>
+                            <a href="#" onclick="handleLogout(); return false;" class="mobile-nav-link"
+                                style="color: #ff6b6b;">🚪 Logga ut</a>
+                        </span>
+                    </div>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Policy Content -->
+        <div class="policy-content">
+            <h1>Integritetspolicy</h1>
+
+            <div class="last-updated">
+                Senast uppdaterad: 2 oktober 2024
+            </div>
+
+            <p>Hos ACABARBERZ tar vi din integritet på största allvar. Denna integritetspolicy beskriver hur vi samlar
+                in, använder och skyddar dina personuppgifter när du använder vår webbplats och våra tjänster.</p>
+
+            <h2>1. Personuppgiftsansvarig</h2>
+            <p><strong>ACABARBERZ</strong><br>
+                Vasagatan 15<br>
+                411 37 Göteborg<br>
+                E-post: info@acabarberz.se<br>
+                Telefon: 031-712 34 56</p>
+
+            <h2>2. Vilka personuppgifter samlar vi in?</h2>
+            <p>Vi samlar in följande typer av personuppgifter:</p>
+            <ul>
+                <li><strong>Kontaktinformation:</strong> Namn, e-postadress, telefonnummer</li>
+                <li><strong>Bokningsinformation:</strong> Datum, tid, vald tjänst, eventuella meddelanden</li>
+                <li><strong>Teknisk information:</strong> IP-adress, webbläsartyp, enhetstyp (via cookies)</li>
+            </ul>
+
+            <h2>3. Hur använder vi dina personuppgifter?</h2>
+            <p>Vi använder dina personuppgifter för att:</p>
+            <ul>
+                <li>Hantera och bekräfta dina bokningar</li>
+                <li>Kommunicera med dig om dina besök och tjänster</li>
+                <li>Skicka bokningsbekräftelser och påminnelser via e-post</li>
+                <li>Förbättra vår webbplats och våra tjänster</li>
+                <li>Uppfylla våra lagliga förpliktelser</li>
+            </ul>
+
+            <h2>4. Laglig grund för behandling</h2>
+            <p>Vi behandlar dina personuppgifter baserat på:</p>
+            <ul>
+                <li><strong>Avtal:</strong> För att fullgöra våra åtaganden när du bokar en tid</li>
+                <li><strong>Berättigat intresse:</strong> För att förbättra våra tjänster och kundservice</li>
+                <li><strong>Samtycke:</strong> För marknadsföringskommunikation (när det är tillämpligt)</li>
+            </ul>
+
+            <h2>5. Delning av personuppgifter</h2>
+            <p>Vi delar aldrig dina personuppgifter med tredje part för marknadsföringssyften. Vi kan dela information
+                med:</p>
+            <ul>
+                <li><strong>E-posttjänster:</strong> För att skicka bokningsbekräftelser (EmailJS)</li>
+                <li><strong>Webbhosting:</strong> För att driva vår webbplats</li>
+                <li><strong>Myndigheter:</strong> När det krävs enligt lag</li>
+            </ul>
+
+            <h2>6. Hur länge sparar vi dina uppgifter?</h2>
+            <p>Vi sparar dina personuppgifter så länge som:</p>
+            <ul>
+                <li>Du är aktiv kund hos oss</li>
+                <li>Det krävs för att uppfylla bokföringsskyldigheter (minst 7 år)</li>
+                <li>Du inte begär radering av dina uppgifter</li>
+            </ul>
+
+            <h2>7. Dina rättigheter</h2>
+            <p>Enligt GDPR har du rätt att:</p>
+            <ul>
+                <li><strong>Få tillgång:</strong> Begära en kopia av dina personuppgifter</li>
+                <li><strong>Rättelse:</strong> Korrigera felaktiga eller ofullständiga uppgifter</li>
+                <li><strong>Radering:</strong> Begära att vi raderar dina uppgifter</li>
+                <li><strong>Begränsning:</strong> Begränsa behandlingen av dina uppgifter</li>
+                <li><strong>Dataportabilitet:</strong> Få ut dina uppgifter i ett strukturerat format</li>
+                <li><strong>Invändning:</strong> Invända mot viss behandling av dina uppgifter</li>
+            </ul>
+
+            <h2>8. Cookies</h2>
+            <p>Vår webbplats använder cookies för att:</p>
+            <ul>
+                <li>Spara dina bokningspreferenser</li>
+                <li>Förbättra användarupplevelsen</li>
+                <li>Analysera webbplatstrafik</li>
+            </ul>
+            <p>Du kan när som helst ändra dina cookie-inställningar i din webbläsare. Läs mer i vår <a
+                    href="cookies.html" style="color: rgb(196, 142, 16);">cookiepolicy</a>.</p>
+
+            <h2>9. Säkerhet</h2>
+            <p>Vi vidtar lämpliga tekniska och organisatoriska åtgärder för att skydda dina personuppgifter mot:</p>
+            <ul>
+                <li>Obehörig åtkomst</li>
+                <li>Förlust eller förstörelse</li>
+                <li>Olovlig behandling</li>
+            </ul>
+
+            <h2>10. Ändringar i integritetspolicyn</h2>
+            <p>Vi kan uppdatera denna integritetspolicy från tid till annan. Väsentliga ändringar kommer att meddelas
+                via e-post eller på vår webbplats.</p>
+
+            <h2>11. Kontakta oss</h2>
+            <p>Om du har frågor om vår integritetspolicy eller vill utöva dina rättigheter, kontakta oss:</p>
+            <p>
+                <strong>E-post:</strong> info@acabarberz.se<br>
+                <strong>Telefon:</strong> 031-712 34 56<br>
+                <strong>Adress:</strong> Vasagatan 15, 411 37 Göteborg
+            </p>
+
+            <h2>12. Klagomål</h2>
+            <p>Om du är missnöjd med hur vi hanterar dina personuppgifter har du rätt att lämna in ett klagomål till
+                Integritetsskyddsmyndigheten (IMY):</p>
+            <p>
+                <strong>Integritetsskyddsmyndigheten</strong><br>
+                Box 8114<br>
+                104 20 Stockholm<br>
+                E-post: imy@imy.se<br>
+                Telefon: 08-657 61 00
+            </p>
+
+            <div
+                style="margin-top: 40px; padding: 20px; background: #e8f6f3; border-radius: 10px; border-left: 4px solid rgb(196, 142, 16);">
+                <p style="margin: 0;"><strong>Behöver du hjälp?</strong> Kontakta oss gärna om du har frågor om hur vi
+                    hanterar dina personuppgifter. Vi hjälper dig gärna!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h3>ACABARBERZ</h3>
+                    <p>Din professionella frisörsalong i hjärtat av Göteborg. Vi erbjuder moderna frisyrer och
+                        behandlingar i en avslappnad och välkomnande miljö.</p>
+                    <div class="footer-social">
+                        <a href="#" title="Facebook">📘</a>
+                        <a href="#" title="Instagram">📷</a>
+                        <a href="#" title="TikTok">🎵</a>
+                        <a href="#" title="LinkedIn">💼</a>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Snabblänkar</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Hem</a></li>
+                        <li><a href="boka.html">Boka tid</a></li>
+                        <li><a href="hitta.html">Hitta oss</a></li>
+                        <li><a href="kontakta.html">Kontakt</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Våra tjänster</h3>
+                    <ul class="footer-links">
+                        <li><a href="boka.html">Konsultation</a></li>
+                        <li><a href="boka.html">Snabb service</a></li>
+                        <li><a href="boka.html">Styling & Design</a></li>
+                        <li><a href="boka.html">Premium Experience</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <div class="footer-contact-info">
+                        <h4>Kontaktinformation</h4>
+                        <div class="footer-contact-item">
+                            <span class="icon">📍</span>
+                            <span>Vasagatan 15, 411 37 Göteborg</span>
+                        </div>
+                        <div class="footer-contact-item">
+                            <span class="icon">📞</span>
+                            <a href="tel:+46317123456">031-712 34 56</a>
+                        </div>
+                        <div class="footer-contact-item">
+                            <span class="icon">📧</span>
+                            <a href="mailto:info@acabarberz.se">info@acabarberz.se</a>
+                        </div>
+                        <div class="footer-contact-item">
+                            <span class="icon">⏰</span>
+                            <span>Mån-Fre: 09:00-18:00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2024 ACABARBERZ. Alla rättigheter förbehållna.</p>
+                <div class="footer-links-bottom">
+                    <a href="integritetspolicy.html">Integritetspolicy</a>
+                    <a href="anvandarvillkor.html">Användarvillkor</a>
+                    <a href="cookies.html">Cookies</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
