@@ -124,17 +124,20 @@ function setupMessagesListener(user) {
 
     console.log(' Startar meddelandelyssnare för:', user.uid);
 
-    // Lyssna på meddelanden för denna användare
+    // Ta bort .where() för att undvika index-krav och permission-fel
     messagesListener = db.collection('messages')
-        .where('userId', 'in', [user.uid, user.email])
         .orderBy('createdAt', 'desc')
-        .limit(50)
+        .limit(100)
         .onSnapshot((snapshot) => {
             console.log(' Meddelanden uppdaterade:', snapshot.size);
 
             allMessages = [];
             snapshot.forEach((doc) => {
-                allMessages.push({ id: doc.id, ...doc.data() });
+                const msg = doc.data();
+                // Filtrera lokalt — endast användarens meddelanden
+                if (msg.userId === user.uid || msg.userEmail === user.email) {
+                    allMessages.push({ id: doc.id, ...msg });
+                }
             });
 
             // Sortera kronologiskt (äldst först)
@@ -145,6 +148,19 @@ function setupMessagesListener(user) {
 
         }, (error) => {
             console.error(' Fel vid meddelandelyssnare:', error);
+            console.warn(' Kontrollera Firestore Security Rules — användarens UID måste ha läsbehörighet.');
+
+            // Visa felmeddelande för användaren
+            const container = document.getElementById('chatContainer');
+            if (container) {
+                container.innerHTML = `
+                    <div class="empty-chat" style="color:#dc3545;">
+                        <span>⚠️</span>
+                        <p>Kunde inte ladda meddelanden</p>
+                        <small>Kontrollera din internetanslutning och försök ladda om sidan.</small>
+                    </div>
+                `;
+            }
         });
 }
 
