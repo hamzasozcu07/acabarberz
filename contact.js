@@ -222,6 +222,8 @@ function displayChatMessages() {
     container.scrollTop = container.scrollHeight;
 }
 
+let markedAsReadIds = new Set(); // Spåra vilka meddelanden vi redan markerat
+
 function updateUnreadCount() {
     const unreadCount = allMessages.filter(m => m.isAdminReply === true && m.isNew === true).length;
 
@@ -235,7 +237,7 @@ function updateUnreadCount() {
         }
     }
 
-    // Markera som lästa när de visas
+    // Markera som lästa när de visas — MEN bara om vi inte redan försökt
     if (unreadCount > 0) {
         markMessagesAsRead();
     }
@@ -243,16 +245,34 @@ function updateUnreadCount() {
 
 async function markMessagesAsRead() {
     const db = firebase.firestore();
-    const unreadMessages = allMessages.filter(m => m.isAdminReply === true && m.isNew === true);
+    const unreadMessages = allMessages.filter(m => 
+        m.isAdminReply === true && 
+        m.isNew === true && 
+        !markedAsReadIds.has(m.id) // FIX: Hoppa över om vi redan försökt
+    );
+
+    // Om inga nya olästa, avsluta
+    if (unreadMessages.length === 0) {
+        return;
+    }
+
+    console.log('📖 Markerar', unreadMessages.length, 'meddelanden som lästa');
 
     for (const msg of unreadMessages) {
         try {
+            // Markera att vi försöker uppdatera detta meddelande
+            markedAsReadIds.add(msg.id);
+
             await db.collection('messages').doc(msg.id).update({
                 isNew: false,
                 readAt: new Date().toISOString()
             });
+
+            console.log('✅ Markerade:', msg.id);
         } catch (error) {
-            console.error('Kunde inte markera som läst:', error);
+            console.warn('⚠️ Kunde inte markera som läst (ID: ' + msg.id + '):', error.message);
+            // VIKTIGT: Ta bort från Set så vi försöker igen senare
+            markedAsReadIds.delete(msg.id);
         }
     }
 }

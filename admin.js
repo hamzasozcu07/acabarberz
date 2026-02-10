@@ -243,26 +243,147 @@ function setupRealtimeCustomersListener() {
         });
 }
 
+// Ersätt den befintliga setupRealtimeMessagesListener-funktionen med denna:
+
+// REALTIDSSYNKRONISERING AV MEDDELANDEN - FAST VERSION
+
 function setupRealtimeMessagesListener() {
     const db = firebase.firestore();
-    console.log(' Startar realtidssynkronisering för meddelanden...');
+    console.log('🔄 Startar realtidssynkronisering för meddelanden...');
 
-    messagesListener = db.collection('messages')
-        .orderBy('createdAt', 'desc')
-        .limit(MAX_MESSAGES_LIMIT)
-        .onSnapshot((snapshot) => {
-            console.log(' Meddelanden uppdaterade! Antal:', snapshot.size);
-            isLoadingMessages = false;
-            allMessages = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    // Avregistrera tidigare listeners om de finns
+    if (messagesListener) {
+        if (typeof messagesListener.old === 'function') {
+            try { messagesListener.old(); } catch (e) { /* ignore */ }
+        }
+        if (typeof messagesListener.conversations === 'function') {
+            try { messagesListener.conversations(); } catch (e) { /* ignore */ }
+        }
+        messagesListener = null;
+    }
 
-            const activeSection = document.querySelector('.dashboard-section.active');
-            if (activeSection && activeSection.id === 'messages') {
-                loadMessagesSection();
-            }
-        }, (error) => {
-            console.error(' Fel vid meddelandesynkronisering:', error);
-            isLoadingMessages = false;
-        });
+    isLoadingMessages = true;
+
+    try {
+        // Lyssna på gamla meddelanden (messages collection)
+        const oldMessagesListener = db.collection('messages')
+            .orderBy('createdAt', 'desc')
+            .limit(100)
+            .onSnapshot((snapshot) => {
+                console.log('📨 Gamla meddelanden uppdaterade:', snapshot.size);
+                isLoadingMessages = false;
+
+                const oldMessages = snapshot.docs
+                    .map(doc => ({ id: doc.id, ...doc.data() }))
+                    .filter(msg => !msg.deleted);
+
+                allMessages = oldMessages;
+                updateMessagesUI(oldMessages, 'old');
+            }, (error) => {
+                console.error('❌ Fel vid gamla meddelanden:', error);
+                isLoadingMessages = false;
+                showNotification('❌ Kunde inte ladda meddelanden: ' + error.message, 'error');
+            });
+
+        // Lyssna på nya konversationer (conversations collection)
+        const conversationsListener = db.collection('conversations')
+            .orderBy('lastMessageAt', 'desc')
+            .onSnapshot((snapshot) => {
+                console.log('💬 Konversationer uppdaterade:', snapshot.size);
+                isLoadingMessages = false;
+
+                const conversations = snapshot.docs.map(doc => ({
+                    id: doc.id,
+                    ...doc.data()
+                }));
+
+                updateConversationsUI(conversations);
+            }, (error) => {
+                console.error('❌ Fel vid konversationer:', error);
+                isLoadingMessages = false;
+                showNotification('❌ Kunde inte ladda konversationer: ' + error.message, 'error');
+            });
+
+        // Spara båda lyssnarna
+        messagesListener = {
+            old: oldMessagesListener,
+            conversations: conversationsListener
+        };
+
+        console.log('✅ Meddelande-lyssnare startade');
+
+    } catch (err) {
+        console.error('❌ setupRealtimeMessagesListener exception:', err);
+        isLoadingMessages = false;
+    }
+}
+
+// Hjälpfunktion för att uppdatera UI
+function updateMessagesUI(messages, type) {
+    console.log('📊 Uppdaterar messages UI (type=' + type + ')');
+
+    if (type === 'old') {
+        allMessages = messages;
+    }
+
+    const activeSection = document.querySelector('.dashboard-section.active');
+    if (activeSection && activeSection.id === 'messages') {
+        console.log('💬 Messages-sektion är aktiv, uppdaterar...');
+        displayConversations();
+    } else {
+        console.log('⏳ Messages-sektion inte aktiv än');
+    }
+}
+
+function updateConversationsUI(conversations) {
+    console.log('🔄 Uppdaterar conversations UI, antal:', conversations.length);
+
+    allConversations = conversations;
+
+    const activeSection = document.querySelector('.dashboard-section.active');
+    if (activeSection && activeSection.id === 'messages') {
+        console.log('💬 Messages-sektion är aktiv, uppdaterar...');
+        displayConversations();
+    } else {
+        console.log('⏳ Messages-sektion inte aktiv än');
+    }
+}
+
+// Hjälpfunktion för att uppdatera UI
+function updateMessagesUI(messages, type) {
+    // Spara i global variabel om det behövs
+    if (type === 'old') {
+        allMessages = messages;
+    }
+
+    const activeSection = document.querySelector('.dashboard-section.active');
+    if (activeSection && activeSection.id === 'messages') {
+        loadMessagesSection();
+    }
+}
+
+function updateConversationsUI(conversations) {
+    allConversations = conversations;
+
+    const activeSection = document.querySelector('.dashboard-section.active');
+    if (activeSection && activeSection.id === 'messages') {
+        loadMessagesSection();
+    }
+}
+
+// Uppdatera cleanup-funktionen
+function cleanupListeners() {
+    console.log('🧹 Rensar lyssnare...');
+
+    if (messagesListener) {
+        if (messagesListener.old) messagesListener.old();
+        if (messagesListener.conversations) messagesListener.conversations();
+        messagesListener = null;
+    }
+    if (bookingsListener) {
+        bookingsListener();
+        bookingsListener = null;
+    }
 }
 
 // NAVIGATION 
