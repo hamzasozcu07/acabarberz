@@ -7,7 +7,9 @@
     <meta name="description" content="Registrera dig hos ACABARBERZ för att boka tid enkelt.">
     <title>Registrera - ACABARBERZ</title>
     <link rel="icon" type="image/png" href="favicon.png">
-    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="stylesheet.css">
 </head>
 
@@ -23,26 +25,27 @@
             <form id="signupForm">
                 <div class="form-group">
                     <label for="signup-name">Fullständigt namn *</label>
-                    <input type="text" id="signup-name" name="name" required 
-                           placeholder="Förnamn Efternamn">
+                    <input type="text" id="signup-name" name="name" required placeholder="Förnamn Efternamn">
                 </div>
 
                 <div class="form-group">
                     <label for="signup-email">E-postadress *</label>
-                    <input type="email" id="signup-email" name="email" required 
-                           placeholder="din@email.se">
+                    <input type="email" id="signup-email" name="email" required placeholder="din@email.se">
                 </div>
 
                 <div class="form-group">
                     <label for="signup-phone">Telefonnummer (valfritt)</label>
-                    <input type="tel" id="signup-phone" name="phone" 
-                           placeholder="070-123 45 67">
+                    <input type="tel" id="signup-phone" name="phone" placeholder="070-123 45 67" maxlength="20"
+                        pattern="[0-9\s\-\+\(\)]*"
+                        title="Endast siffror, mellanslag, bindestreck och parenteser tillåtna">
+                    <small style="color: #666; display: block; margin-top: 5px;">
+                        Max 20 tecken. Välj land från rullgardinslistan när du fyller i.
+                    </small>
                 </div>
 
                 <div class="form-group">
                     <label for="signup-password">Lösenord *</label>
-                    <input type="password" id="signup-password" name="password" required 
-                           placeholder="Minst 8 tecken">
+                    <input type="password" id="signup-password" name="password" required placeholder="Minst 8 tecken">
                     <small style="color: #666; display: block; margin-top: 5px;">
                         Lösenordet måste innehålla minst 8 tecken
                     </small>
@@ -50,14 +53,14 @@
 
                 <div class="form-group">
                     <label for="signup-confirm-password">Bekräfta lösenord *</label>
-                    <input type="password" id="signup-confirm-password" name="confirm-password" required 
-                           placeholder="Upprepa lösenord">
+                    <input type="password" id="signup-confirm-password" name="confirm-password" required
+                        placeholder="Upprepa lösenord">
                 </div>
 
                 <div class="form-group checkbox">
                     <input type="checkbox" id="signup-terms" name="terms" required>
                     <label for="signup-terms">
-                        Jag accepterar <a href="anvandarvillkor.html" target="_blank">användarvillkoren</a> 
+                        Jag accepterar <a href="anvandarvillkor.html" target="_blank">användarvillkoren</a>
                         och <a href="integritetspolicy.html" target="_blank">integritetspolicyn</a>
                     </label>
                 </div>
@@ -88,4 +91,4 @@
     <script src="validation.js"></script>
 </body>
 
-</html> 
+</html>

@@ -231,6 +231,14 @@ function validatePhoneNumber(phoneNumber, countryCode = '+46') {
     // Ta bort alla mellanslag, bindestreck och parenteser
     const cleanNumber = phoneNumber.replace(/[\s\-\(\)]/g, '');
     
+    // KRITISK KONTROLL: Maximal absolut längd (med landskod)
+    if (cleanNumber.length > 20) {
+        return {
+            valid: false,
+            message: '❌ För många siffror! Maximal längd är 20 tecken.'
+        };
+    }
+    
     // Hitta rätt landskod
     const country = COUNTRY_CODES.find(c => c.code === countryCode);
     
@@ -245,33 +253,71 @@ function validatePhoneNumber(phoneNumber, countryCode = '+46') {
     let numberOnly = cleanNumber;
     if (cleanNumber.startsWith(countryCode)) {
         numberOnly = cleanNumber.substring(countryCode.length);
+    } else if (cleanNumber.startsWith('+')) {
+        // Ta bort eventuell + i början
+        numberOnly = cleanNumber.substring(1);
+        // Ta bort landskod om den finns
+        for (const c of COUNTRY_CODES) {
+            if (numberOnly.startsWith(c.code.substring(1))) {
+                numberOnly = numberOnly.substring(c.code.length - 1);
+                break;
+            }
+        }
     }
     
-    // Ta bort inledande 0 om det finns
+    // Ta bort inledande 0 om det finns (för svenska nummer typ 070 → 70)
     if (numberOnly.startsWith('0')) {
         numberOnly = numberOnly.substring(1);
     }
     
+    // STRIKT VALIDERING: Endast siffror
     const numberRegex = /^\d+$/;
     if (!numberRegex.test(numberOnly)) {
         return {
             valid: false,
-            message: 'Telefonnummer får bara innehålla siffror'
+            message: '❌ Telefonnummer får bara innehålla siffror'
         };
     }
     
-    // Kontrollera längd
-    if (numberOnly.length < country.minLength || numberOnly.length > country.maxLength) {
+    // STRIKT LÄNGDKONTROLL
+    if (numberOnly.length < country.minLength) {
         return {
             valid: false,
-            message: `Telefonnummer för ${country.country} måste vara ${country.minLength}-${country.maxLength} siffror`
+            message: `❌ För kort! ${country.country} måste ha minst ${country.minLength} siffror. Du har ${numberOnly.length}.`
+        };
+    }
+    
+    if (numberOnly.length > country.maxLength) {
+        return {
+            valid: false,
+            message: `❌ För långt! ${country.country} får max ha ${country.maxLength} siffror. Du har ${numberOnly.length}.`
+        };
+    }
+    
+    // EXTRA SÄKERHETSKONTROLL: Blockera uppenbara spam-nummer
+    // (alla siffror samma, eller bara 1234567890 upprepat)
+    const uniqueDigits = new Set(numberOnly.split('')).size;
+    if (uniqueDigits === 1) {
+        return {
+            valid: false,
+            message: '❌ Ogiltigt nummer. Alla siffror kan inte vara samma.'
+        };
+    }
+    
+    // Kontrollera för upprepade sekvenser (111111, 123456789012345)
+    if (numberOnly === '1'.repeat(numberOnly.length) || 
+        numberOnly === '0'.repeat(numberOnly.length)) {
+        return {
+            valid: false,
+            message: '❌ Ogiltigt nummer. Ange ett riktigt telefonnummer.'
         };
     }
     
     return {
         valid: true,
-        message: 'Giltigt telefonnummer',
-        formattedNumber: `${countryCode}${numberOnly}`
+        message: `✅ Giltigt ${country.country} nummer`,
+        formattedNumber: `${countryCode} ${numberOnly}`,
+        country: country.country
     };
 }
 
